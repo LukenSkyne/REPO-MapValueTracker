@@ -1,0 +1,7 @@
+{
+	"name": "Map_Value_Tracker",
+	"version_number": "1.0.0",
+	"website_url": "https://github.com/LukenSkyne/REPO-MapValueTracker",
+	"description": "Tracks valuable items on the map outside the extract zone",
+	"dependencies": ["BepInEx-BepInExPack-5.4.2100"]
+}
