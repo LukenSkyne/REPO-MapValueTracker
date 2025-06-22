@@ -18,3 +18,7 @@ By default, as soon as the last extract's goal is met, it also shows how far to 
 * Show total value
 * Show item count
 * Show the closest item's distance (rough distance or precise)
+
+## Acknowledgements
+
+* [Tansinator](https://github.com/tansinator) for the original project
