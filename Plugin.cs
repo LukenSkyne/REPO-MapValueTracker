@@ -14,7 +14,7 @@ namespace MapValueTracker
     {
         private const string PLUGIN_GUID = "MapValueTracker";
         private const string PLUGIN_NAME = "MapValueTracker";
-        private const string PLUGIN_VERSION = "1.0.0";
+        private const string PLUGIN_VERSION = "1.0.1";
         private readonly Harmony harmony = new Harmony("Luken.REPO.MapValueTracker");
 
         public static new ManualLogSource Logger;
