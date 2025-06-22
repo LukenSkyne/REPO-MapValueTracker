@@ -1,6 +1,6 @@
 <p align="center" style="text-align: center">
   <a href="https://github.com/LukenSkyne/REPO-MapValueTracker">
-    <img alt="Map Value Tracker Logo" src="icon.png" width="128" height="128" />
+    <img alt="Map Value Tracker Logo" src="https://raw.githubusercontent.com/LukenSkyne/REPO-MapValueTracker/main/icon.png" width="128" height="128" />
   </a>
 </p>
 
