@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using HarmonyLib;
 using MapValueTracker.Config;
+using MapValueTracker.Utils;
 using TMPro;
 using UnityEngine;
 
@@ -36,7 +37,7 @@ namespace MapValueTracker.Patches
             var extractionHaulGoal = Traverse.Create(RoundDirector.instance).Field("extractionHaulGoal").GetValue<int>();
             var mapToggled = SemiFunc.InputHold(InputKey.Map) || Traverse.Create(MapToolController.instance).Field("mapToggled").GetValue<bool>();
 
-            if (allExtractionPointsCompleted || MapValueTracker.strayList.Count == 0 || (!mapToggled && !Configuration.AlwaysOn.Value))
+            if (allExtractionPointsCompleted || ValuableTracker.Instance.StrayItems.Count == 0 || (!mapToggled && !Configuration.AlwaysOn.Value))
             {
                 MapValueTracker.textInstance.SetActive(false);
                 return;
@@ -53,7 +54,7 @@ namespace MapValueTracker.Patches
 
             if (Configuration.ShowItemDistance.Value && canShowItemDistance)
             {
-                var closestDist = MapValueTracker.GetItemDistance();
+                var closestDist = ValuableTracker.Instance.GetItemDistance();
 
                 if (Configuration.UsePreciseDistance.Value)
                 {
@@ -76,10 +77,10 @@ namespace MapValueTracker.Patches
             }
 
             if (Configuration.ShowTotalValue.Value)
-                textParts.Add($"${MapValueTracker.strayValue:N0}");
+                textParts.Add($"${ValuableTracker.Instance.StrayValue:N0}");
 
             if (Configuration.ShowItemCount.Value)
-                textParts.Add($"x{MapValueTracker.strayList.Count}");
+                textParts.Add($"x{ValuableTracker.Instance.StrayItems.Count}");
 
             MapValueTracker.valueText.SetText(textParts.Join(null, " "));
         }

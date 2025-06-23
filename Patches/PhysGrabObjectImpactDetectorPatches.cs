@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using MapValueTracker.Utils;
 
 namespace MapValueTracker.Patches
 {
@@ -13,7 +14,7 @@ namespace MapValueTracker.Patches
                 return;
 
             MapValueTracker.Logger.LogDebug($"PhysGrabObjectImpactDetector::BreakRPC | Lost: {valueLost}");
-            MapValueTracker.UpdateTracker();
+            ValuableTracker.Instance.Update();
         }
 
         [HarmonyPatch(typeof(PhysGrabObject), "DestroyPhysGrabObjectRPC")]
@@ -30,7 +31,7 @@ namespace MapValueTracker.Patches
 
             var originalValue = Traverse.Create(vo).Field("dollarValueOriginal").GetValue<float>();
             MapValueTracker.Logger.LogDebug($"PhysGrabObjectImpactDetector::DestroyPhysGrabObjectRPC | Original Value: {originalValue}");
-            MapValueTracker.UpdateTracker(vo);
+            ValuableTracker.Instance.Remove(vo);
         }
     }
 }

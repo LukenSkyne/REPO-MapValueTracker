@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using MapValueTracker.Utils;
 
 namespace MapValueTracker.Patches
 {
@@ -10,7 +11,7 @@ namespace MapValueTracker.Patches
         public static void StartRoomGeneration()
         {
             MapValueTracker.Logger.LogInfo("Generation Started");
-            MapValueTracker.ResetValues();
+            ValuableTracker.Instance.Reset();
         }
 
         [HarmonyPatch("GenerateDone")]
@@ -18,7 +19,6 @@ namespace MapValueTracker.Patches
         public static void GenerateDonePostfix()
         {
             MapValueTracker.Logger.LogInfo("Generation Finished");
-            MapValueTracker.UpdateTracker();
         }
     }
 }

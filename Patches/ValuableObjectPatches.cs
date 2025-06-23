@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using MapValueTracker.Utils;
 
 namespace MapValueTracker.Patches
 {
@@ -10,7 +11,7 @@ namespace MapValueTracker.Patches
         static void DollarValueSet(ValuableObject __instance, float value)
         {
             MapValueTracker.Logger.LogDebug($"ValuableObject::DollarValueSetRPC | New Valuable Object: {__instance.name} - ${value:N0}");
-            MapValueTracker.UpdateTracker();
+            ValuableTracker.Instance.Add(__instance);
         }
         [HarmonyPatch("DollarValueSetLogic")]
         [HarmonyPostfix]
@@ -21,7 +22,7 @@ namespace MapValueTracker.Patches
 
             var currentValue = Traverse.Create(__instance).Field("dollarValueCurrent").GetValue<float>();
             MapValueTracker.Logger.LogDebug($"ValuableObject::DollarValueSetLogic | New Valuable Object: {__instance.name} - ${currentValue:N0}");
-            MapValueTracker.UpdateTracker();
+            ValuableTracker.Instance.Add(__instance);
         }
 
         [HarmonyPatch("AddToDollarHaulList")]
@@ -30,7 +31,7 @@ namespace MapValueTracker.Patches
         {
             var currentValue = Traverse.Create(__instance).Field("dollarValueCurrent").GetValue<float>();
             MapValueTracker.Logger.LogDebug($"ValuableObject::AddToDollarHaulList | Moved to Extract: {__instance.name} - ${currentValue:N0}");
-            MapValueTracker.UpdateTracker();
+            ValuableTracker.Instance.Update();
         }
         [HarmonyPatch("AddToDollarHaulListRPC")]
         [HarmonyPostfix]
@@ -38,7 +39,7 @@ namespace MapValueTracker.Patches
         {
             var currentValue = Traverse.Create(__instance).Field("dollarValueCurrent").GetValue<float>();
             MapValueTracker.Logger.LogDebug($"ValuableObject::AddToDollarHaulListRPC | Moved to Extract: {__instance.name} - ${currentValue:N0}");
-            MapValueTracker.UpdateTracker();
+            ValuableTracker.Instance.Update();
         }
 
         [HarmonyPatch("RemoveFromDollarHaulList")]
@@ -47,7 +48,7 @@ namespace MapValueTracker.Patches
         {
             var currentValue = Traverse.Create(__instance).Field("dollarValueCurrent").GetValue<float>();
             MapValueTracker.Logger.LogDebug($"ValuableObject::RemoveFromDollarHaulList | Removed from Extract: {__instance.name} - ${currentValue:N0}");
-            MapValueTracker.UpdateTracker();
+            ValuableTracker.Instance.Update();
         }
         [HarmonyPatch("RemoveFromDollarHaulListRPC")]
         [HarmonyPostfix]
@@ -55,7 +56,7 @@ namespace MapValueTracker.Patches
         {
             var currentValue = Traverse.Create(__instance).Field("dollarValueCurrent").GetValue<float>();
             MapValueTracker.Logger.LogDebug($"ValuableObject::RemoveFromDollarHaulListRPC | Removed from Extract: {__instance.name} - ${currentValue:N0}");
-            MapValueTracker.UpdateTracker();
+            ValuableTracker.Instance.Update();
         }
     }
 }
