@@ -74,7 +74,12 @@ public class ValuableTracker
         {
             if (item == null || item.gameObject == null)
                 continue;
-            
+
+            var discovered = Traverse.Create(item).Field("discovered").GetValue<bool>();
+
+            if (discovered)
+                continue;
+
             var itemPos = item.gameObject.transform.position;
             var dist = (itemPos - playerPos).magnitude;
 
