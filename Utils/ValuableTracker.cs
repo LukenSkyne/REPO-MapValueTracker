@@ -83,7 +83,7 @@ public class ValuableTracker
             var itemPos = item.gameObject.transform.position;
             var dist = (itemPos - playerPos).magnitude;
 
-            if (closest != null && !(dist < closestDist))
+            if (closest != null && dist > closestDist)
                 continue;
 
             closest = item;
