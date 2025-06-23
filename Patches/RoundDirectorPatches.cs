@@ -50,19 +50,17 @@ namespace MapValueTracker.Patches
 
             var textParts = new List<string>();
             var isLastExtractGoalMet = extractionPointsCompleted >= extractionPoints - 1 && currentHaul >= extractionHaulGoal;
-            var canShowItemDistance = isLastExtractGoalMet || Configuration.AlwaysShowDistance.Value;
+            var showItemDistance = Configuration.ShowItemDistance.Value && (isLastExtractGoalMet || Configuration.AlwaysShowDistance.Value);
 
-            if (Configuration.ShowItemDistance.Value && canShowItemDistance)
+            if (showItemDistance && ValuableTracker.Instance.GetItemDistance() is var itemDistance and > 0f)
             {
-                var closestDist = ValuableTracker.Instance.GetItemDistance();
-
                 if (Configuration.UsePreciseDistance.Value)
                 {
-                    textParts.Add($"{closestDist:N1}m");
+                    textParts.Add($"{itemDistance:N1}m");
                 }
                 else
                 {
-                    switch (closestDist)
+                    switch (itemDistance)
                     {
                         case < 5:
                             textParts.Add("•••"); break;
